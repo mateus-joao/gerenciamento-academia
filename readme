@@ -1,12 +1,1 @@
-estrutura
-server/
-│
-├── controllers/
-├── services/
-├── repositories/
-├── models/
-├── routes/
-├── middlewares/
-├── validators/
-├── utils/
-└── config/
+
