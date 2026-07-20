@@ -7,12 +7,12 @@ const UserControllerInstance = new UserController();
 const usersRoutes = Router();
 //http://localhost:3001/api/users
 
-// buscar todos os usuarios cadastrados
+// buscar todos os usuários cadastrados
 usersRoutes.get('/', (req, res) =>
 	UserControllerInstance.listUsers(req, res)
 );
 
-// criar usuario
+// criar usuário
 usersRoutes.post('/createUser', createUserValidation, validateAuth,  (req, res) =>
 	UserControllerInstance.createUser(req, res)
 );
@@ -22,16 +22,17 @@ usersRoutes.post('/login', loginUserValidation, validateAuth, (req, res) =>
 	UserControllerInstance.login(req, res)
 );
 
-// deletar usuario
+// deletar usuário
 usersRoutes.delete('/delete', authMiddleware, (req, res) =>
 	UserControllerInstance.deleteUser(req, res)
 );
 
-// atualizar dados do usuario
+// atualizar dados do usuário
 usersRoutes.put('/updateUser', authMiddleware, updateUserValidation, validateAuth, (req, res) =>
 	UserControllerInstance.updaterUser(req, res)
 );
 
+// buscar dados do usuário
 usersRoutes.get('/me', authMiddleware, (req, res) => 
 	UserControllerInstance.getUser(req, res)
 );

@@ -10,14 +10,13 @@ export default {
   },
   async createUser(user) {
     const passwordHash = await bcrypt.hash(user.password, 10);
-
     return await User.create({
         ...user,
         password: passwordHash
     });
   },
-    async findByEmail(email) {
-    return await User.findOne({ email });
+  async findUser(credencial) {
+    return await User.findOne(credencial);
   },
   async deleteUser(id) {
     return await User.findByIdAndDelete(id)

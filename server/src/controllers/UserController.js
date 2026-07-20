@@ -19,10 +19,16 @@ export class UserController {
     try {
       const credencials = (req.body);
 
-      const exist = await UserService.findByEmail(credencials.email)
+      const exist = await UserService.findUser({email: credencials.email})
       if (exist){
         return response.error(res, {mensage: "This email already exists."})
       } 
+      const cpfExist = await UserService.findUser({cpf: credencials.cpf})
+      if (cpfExist){ 
+        return response.error(res, {mensage: "This cpf already exists."})
+      
+      }
+
       const user = await UserService.createUser(credencials) 
       if (!user){
         return response.error(res, {mensage: 'Error creating user'})
@@ -38,7 +44,7 @@ export class UserController {
   async login(req, res) {
     try{
       const credentials = req.body;
-      const user = await UserService.findByEmail(credentials.email)
+      const user = await UserService.findUser({email: credentials.email})
       if (!user) {
         return response.error(res, {mensage: "User not found"})
       }

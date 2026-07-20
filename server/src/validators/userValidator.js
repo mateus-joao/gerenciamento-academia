@@ -1,4 +1,5 @@
 import { body } from "express-validator";
+import { cpf } from "cpf-cnpj-validator";
 
 export const createUserValidation = [
   body("name")
@@ -7,12 +8,27 @@ export const createUserValidation = [
     .withMessage("Invalid name"),
 
   body("email")
+    .trim()
     .isEmail()
     .withMessage("Invalid email"),
-
+    
+  body("cpf")
+    .custom((value) => {
+      if (!cpf.isValid(value)) {
+        throw new Error("Invalid CPF");
+      }
+      return true;
+    }),
   body("password")
-    .isLength({ min: 8 })
-    .withMessage("Invalid password")
+    .isStrongPassword({
+      minLength: 8,
+      minLowercase: 1,
+      minUppercase: 1,
+      minNumbers: 1,
+      minSymbols: 1
+  
+    })
+    .withMessage("Invalid password"),
 ];
 
 export const updateUserValidation = [
@@ -28,16 +44,30 @@ export const updateUserValidation = [
 
   body("password")
     .optional()
-    .isLength({ min: 8 })
-    .withMessage("Invalid password")
+    .isStrongPassword({
+      minLength: 8,
+      minLowercase: 1,
+      minUppercase: 1,
+      minNumbers: 1,
+      minSymbols: 1
+    })
+    .withMessage("Invalid password"),
 ];
 
 export const loginUserValidation = [
   body("email")
+    .trim()
     .isEmail()
     .withMessage("Invalid email"),
 
   body("password")
-    .isLength({ min: 8 })
-    .withMessage("Invalid password")
+    .isStrongPassword({
+      minLength: 8,
+      minLowercase: 1,
+      minUppercase: 1,
+      minNumbers: 1,
+      minSymbols: 1
+  
+    })
+    .withMessage("Invalid password"),
 ];
