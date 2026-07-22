@@ -33,7 +33,7 @@ export default {
   },
 
   async getUser(id) {
-    return User.findById(id)
+    return await User.findById(id)
   }
 
 };

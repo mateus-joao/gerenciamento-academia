@@ -10,7 +10,7 @@ export function authMiddleware(req, res, next) {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    req.userId = decoded.id;
+    req.user = decoded;
 
     return next();
   } catch {

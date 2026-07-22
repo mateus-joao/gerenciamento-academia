@@ -1,11 +1,12 @@
 import AppError from '../utils/AppError.js';
+export const roleMiddleware = (...roles) => {
+    return (req, res) => {
 
-export function roleMiddleware(role) {
-  return (req, res, next) => {
-    const userRole = req.user && req.user.role;
-    if (!userRole || userRole !== role) {
-      return next(new AppError('Forbidden', 403));
-    }
-    next();
-  };
-}
+        if (!roles.includes(req.user.role)) {
+            return res.status(403).json({
+                message: "Acesso negado."
+            });
+        }
+        
+    };
+};
